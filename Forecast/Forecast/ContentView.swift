@@ -11,6 +11,7 @@ import CoreLocation
 struct ContentView: View {
     @EnvironmentObject var vm: ForecastViewModelImpl
     @State private var queryName: String = ""
+    @State private var imgID: Int = 0
     
     init() {
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -62,7 +63,7 @@ extension ContentView {
                         
                         Spacer()
                         
-                        Image(systemName: conditionName)
+                        Image(systemName: weatherImg(item.weather[imgID].id))
                             .renderingMode(.original)
                             .resizable()
                             .scaledToFit()
@@ -107,8 +108,8 @@ extension ContentView {
         }
     }
     
-    var conditionName: String {
-        switch vm.weatherWeek[0].weather[0].id {
+    func weatherImg(_ nameID: Int) -> String {
+        switch nameID {
         case 200...232:
             return "cloud.bolt.fill"
         case 230...232:
